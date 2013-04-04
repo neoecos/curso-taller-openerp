@@ -9,6 +9,7 @@
                 <form string="mi_modulo mi_tabla">
                     <field name="name"/>
                     <field name="description"/>
+                    <field name="notes"/>
                 </form>
           </field>
     </record>
@@ -20,6 +21,7 @@
             <tree string="mi_modulo mi_tabla">
                 <field name="name"/>
                 <field name="description"/>
+                <field name="notes"/>
             </tree>
         </field>
     </record>

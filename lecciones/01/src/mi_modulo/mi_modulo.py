@@ -5,5 +5,6 @@ class mi_modulo_mi_tabla(osv.osv):
     _columns = {
         'name' : fields.char('nombre',size=255),
         'description' : fields.char('descripcion',size=255),
+        'notes' : fields.char('notas',size=255),
     }
 mi_modulo_mi_tabla()
