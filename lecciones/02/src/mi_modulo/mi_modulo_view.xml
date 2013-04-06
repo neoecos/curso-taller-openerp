@@ -11,7 +11,7 @@
                     <field name="active"/>
                     <field name="quantity"/>
                     <field name="date"/>
-                    <field name="datetime"/>
+                    <field name="datetime" readonly='True'/>
                     <field name="description"/>
                     <field name="price"/>
                     <field name="state"/>
