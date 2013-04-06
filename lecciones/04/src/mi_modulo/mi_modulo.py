@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 from osv import fields, osv
 from random import randint, random
-from datetime import datetime
+from datetime import datetime, timedelta
 
 class mi_modulo_mi_tabla(osv.osv):
     _name = "mi_modulo.mi_tabla"
@@ -22,31 +22,51 @@ class mi_modulo_mi_tabla(osv.osv):
     ]
 
     def _check_date(self, cr, uid, ids, context = None):
-        is_valid_data = True
+        is_valid_date = False
         present = datetime.now()
         for obj in self.browse(cr,uid,ids,context=None):
-            if not obj.date or not obj.datetime:
+            if not obj.date:
                 continue
 
             date = datetime.strptime(obj.date, '%Y-%m-%d')
-            date_time = datetime.strptime(obj.datetime, '%Y-%m-%d %H:%M:%S')
-            if(date < present or date_time < present):
-                is_valid_data = False
 
-        return is_valid_data
+            if( (date.year >= present.year) and (present.month >= present.month) and 
+                (date.day > present.day) ):
+                is_valid_date = True
+
+        return is_valid_date
+    
+    def _check_datetime(self, cr, uid, ids, context = None):
+        is_valid_datetime = False
+        present = datetime.now()
+        ten_minutes = timedelta(minutes=10)
+        for obj in self.browse(cr,uid,ids,context=None):
+            if not obj.datetime:
+                continue
+            date_time = datetime.strptime(obj.datetime, '%Y-%m-%d %H:%M:%S')
+            #Allow no more than 10 min between datetimes             
+            if((present - ten_minutes) < date_time ):
+                is_valid_datetime = True
+
+        return is_valid_datetime
 
     _constraints = [
-        (_check_date,'Fecha debe ser en el futuro',['date','datetime']),
+        (_check_date,'Fecha debe ser en el futuro',['date']),
+        (_check_datetime,'No puede tener más de 10 minutos de diferencia',['datetime']),
     ]
 
     def _random_quantity(self, cr, uid, context = None):
         return randint(5,100)
-
+    
+    def _get_default_datetime(self, cr, uid, context = None):        
+        return datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+    
     _defaults = {
          'active': True,
          'state': 'draft',
          'price': lambda *a: random(),
          'quantity': _random_quantity,
+         'datetime' : _get_default_datetime,
     }
     
 mi_modulo_mi_tabla()
