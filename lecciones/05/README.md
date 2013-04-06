@@ -8,13 +8,13 @@ Para la relación uno a muchos se utilizan los siguientes tipos de campos:
 
 * **many2one**: Este campo crea la llave foranea entre las tablas de dos objetos de negocios
 
-      class mi_modulo_mi_tabla(osv.osv):
-          _name = "mi_modulo.mi_tabla"
-          _columns = {
-              ...
-              'tabla_relacionada_id': fields.many2one('mi_modulo.mi_tabla_relacionada', 'Tabla Relacionada', domain="[('state','=','active')]", ondelete='set null'),
-              ...
-          }
+	      class mi_modulo_mi_tabla(osv.osv):
+		  _name = "mi_modulo.mi_tabla"
+		  _columns = {
+		      ...
+		      'tabla_relacionada_id': fields.many2one('mi_modulo.mi_tabla_relacionada', 'Tabla Relacionada', domain="[('state','=','active')]", ondelete='set null'),
+		      ...
+		  }
 
   Los parámetros recibidos por este campo son:
 
